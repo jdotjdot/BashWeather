@@ -1,7 +1,7 @@
 BashWeather
 ===========
 
-A Bash script to add regularly updated localized weather icons to your bash prompt
+A Bash script to add regularly updated localized weather icons to your bash prompt.
 
 Program: BashWeather
 Author: J.J.
@@ -14,6 +14,8 @@ This script makes use of the following tools:
 + [OpenWeatherMap](http://openweathermap.org)'s excellent weather API
 + [Shellcheck.net](http://www.shellcheck.net/) -- excellent Bash debugging tool!
 + [FreeGeoIP.net](http://freegeoip.net) for IP geolocation
+
+The accuracy of BashWeather relies on OpenWeatherMap.
 
 ##USAGE
 `BashWeather.sh -h` gives the following:
