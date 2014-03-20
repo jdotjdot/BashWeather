@@ -13,11 +13,12 @@ This script makes use of the following tools:
     *  Includes both the source code as well as the pre-compiled XCode project
 + [OpenWeatherMap](http://openweathermap.org)'s excellent weather API
 + [Shellcheck.net](http://www.shellcheck.net/) -- excellent Bash debugging tool!
++ [FreeGeoIP.net](http://freegeoip.net) for IP geolocation
 
 ##USAGE
-BashWeather -h gives the following:
+`BashWeather.sh -h` gives the following:
 
-USAGE:
+USAGE:<br>
     Add `. [/path/to/]BashWeather.sh [options]` to your `.bashrc`,
     then include `$WEATHERCHAR` somewhere in your bash `$PROMPT` variable.
     If you plan to use the provided `RunLocateMe` binary that makes use of Mac OS X's geolocation feature, make sure that it is located in the same directory as `BashWeather.sh`.
@@ -30,7 +31,6 @@ OPTIONS:
  + `-u <integer>` - how often, in seconds, to wait between weather updates.  Default is 10800 (3 hours).
  + `-s <string>` - a string, like `"(weather updated)"`, to display only when the weather has just been updated.  No default.
  + `-h` - display the help.
-
 
 BashWeather will create the following global variables in Bash:
 + `LAST_TIME_CHECKED_WEATHER` - to store the last time the weather was updated
