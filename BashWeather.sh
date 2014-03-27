@@ -2,7 +2,6 @@
 
 
 
-### This needs to be fixes b/c RunLocateMe breaks if there's no internet
 # If online, do weather
 function check_internet {
     if [ -z "$BASHWEATHER_FIRSTRUN" ] ; then
