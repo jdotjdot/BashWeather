@@ -22,7 +22,7 @@ The accuracy of BashWeather relies on OpenWeatherMap.
 
 USAGE:<br>
     Add `. [/path/to/]BashWeather.sh [options]` to your `.bashrc`,
-    then include `$WEATHERCHAR` somewhere in your bash `$PROMPT` variable.
+    then include `$WEATHERCHAR` below somewhere in your bash `$PROMPT` variable.
     If you plan to use the provided `RunLocateMe` binary that makes use of Mac OS X's geolocation feature, make sure that it is located in the same directory as `BashWeather.sh`.
 
 OPTIONS:
@@ -36,6 +36,6 @@ OPTIONS:
 
 BashWeather will create the following global variables in Bash:
 + `LAST_TIME_CHECKED_WEATHER` - to store the last time the weather was updated
-+ `LAT`
-+ `LON`
-+ `WEATHERCHAR` - this is the final output of the script, a variable containing the appropriate weather character for you to include in your bash prompt as you see fit
++ `LAT` - latitude
++ `LON` - longitude
++ `WEATHERCHAR` - a variable containing the appropriate weather character for you to include in your bash prompt as you see fit.

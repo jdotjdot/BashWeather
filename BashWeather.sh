@@ -57,7 +57,7 @@ function sourceDirectory {
 function runWeather {
 
   local OPTIND
-  while getopts ":c:l:u:s:" opt ; do
+  while getopts ":c:l:u:s:h" opt ; do
       case "$opt" in
           c  )   # default character to display if no weather, leave empty for none
               c="$OPTARG"
@@ -73,13 +73,31 @@ function runWeather {
               ;;
           h  )
               # echo the help file
+	      local HELP=$(cat <<"EOF"
+USAGE:
+    Add `. [/path/to/]BashWeather.sh [options]` to your `.bashrc`,
+    then include `$WEATHERCHAR` below somewhere in your bash `$PROMPT` variable.
+    If you plan to use the provided `RunLocateMe` binary that makes use of Mac OS X\'s geolocation feature, make sure that it is located in the same directory as `BashWeather.sh`.
+
+OPTIONS:
+ + `-c <character>` - default character to be displayed in your prompt should the weather not be available for any reason.  Default character is the interrobang (`‽`)
+ + `-l [<city and country> | ip]` - switch to instead supply your city and country in a string for location checking (e.g., `"London, UK"`).
+     * To have BashWeather check your location via your IP address instead, supply `-l ip`.
+     * Default is to use `LocateMe`.
+ + `-u <integer>` - how often, in seconds, to wait between weather updates.  Default is 10800 (3 hours).
+ + `-s <string>` - a string, like `"(weather updated)"`, to display only when the weather has just been updated.  No default.
+ + `-h` - display the help.
+EOF
+) 
+	      echo "$HELP"
+	      return 1
               ;;
           \? )
               echo "Invalid option: -$OPTARG" >&2
               ;;
           :  )
               echo "Option -$OPTARG requires an argument." >&2
-              exit 1
+              return 1
               ;;
       esac
   done
