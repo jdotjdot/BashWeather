@@ -3,10 +3,10 @@ BashWeather
 
 A Bash script to add regularly updated localized weather icons to your bash prompt.
 
-Program: BashWeather
-Author: J.J.
-Email: JJ@jdotjdot.com
-Version 1.0
+Program: BashWeather<br>
+Author: J.J.<br>
+Email: JJ@jdotjdot.com<br>
+Version 1.0<br>
 
 This script makes use of the following tools:
 +  [LocateMe](https://github.com/netj/LocateMe) for Mac OS X by Robert Harder
