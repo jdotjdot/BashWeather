@@ -17,6 +17,9 @@ This script makes use of the following tools:
 
 The accuracy of BashWeather relies on OpenWeatherMap.
 
+**Known Issues:**
++ Per this [StackOverflow question](http://stackoverflow.com/questions/22922138/terminal-overwriting-same-line-when-too-long?noredirect=1#comment35042608_22922138), you may encounter bugs in certain terminal programs or versions of bash when writing past the end of a line, due to issues with unicode display.  This is being resolved. 
+
 ##USAGE
 `BashWeather.sh -h` gives the following:
 
