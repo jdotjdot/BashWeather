@@ -18,7 +18,7 @@ This script makes use of the following tools:
 The accuracy of BashWeather relies on OpenWeatherMap and, if using it, FreeGeoIP.
 
 ![BashWeather screenshot](https://dl.dropboxusercontent.com/s/z4ut9ggm8y14izp/bashweather%20screenshot.png)
-![BashWeather screenshot](https://dl.dropboxusercontent.com/s/fnlza39a2q1ubut/bashweather%20screenshot%202.png)
+<!-- ![BashWeather screenshot](https://dl.dropboxusercontent.com/s/fnlza39a2q1ubut/bashweather%20screenshot%202.png) -->
 
 *Screenshots of sample terminal sessions with BashWeather, note the moon and sun*
 
