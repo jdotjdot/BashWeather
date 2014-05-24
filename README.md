@@ -18,8 +18,9 @@ This script makes use of the following tools:
 The accuracy of BashWeather relies on OpenWeatherMap and, if using it, FreeGeoIP.
 
 ![BashWeather screenshot](https://dl.dropboxusercontent.com/s/z4ut9ggm8y14izp/bashweather%20screenshot.png)
+![BashWeather screenshot](https://dl.dropboxusercontent.com/s/fnlza39a2q1ubut/bashweather%20screenshot%202.png)
 
-*Screenshot of sample terminal session with BashWeather, note the moon*
+*Screenshots of sample terminal sessions with BashWeather, note the moon and sun*
 
 **Known Issues:**
 + Per this [StackOverflow question](http://stackoverflow.com/questions/22922138/terminal-overwriting-same-line-when-too-long?noredirect=1#comment35042608_22922138), you may encounter bugs in certain terminal programs or versions of bash when writing past the end of a line, due to issues with unicode display.  This is believed to be resolved by having removed the "umbrella with rain" character and replaced it with the regular umbrella.
