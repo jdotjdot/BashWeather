@@ -1,6 +1,34 @@
 #!/bin/bash
 
 
+function get_symbol {
+  # this function takes in the word for the weather character
+  #  and returns the right UTF8 encoding in oct for it
+
+  local OUT
+  case "$@" in
+
+    sun )        #utf8 hex: \xe2\x98\x80 | unicode: U+2600
+                 OUT='\342\230\200';;
+    cloud )      #utf8 hex: \xe2\x98\x81 | unicode: U+2601
+                 OUT='\342\230\201';;
+    umbrella )   #utf8 hex: \xe2\x98\x82 | unicode: U+2602
+                 OUT='\342\230\202';;
+    snowman )    #utf8 hex: \xe2\x98\x83 | unicode: U+2603
+                 OUT='\342\230\203';;
+    moon )       #utf8 hex: \xe2\x98\xbd | unicode: U+263D
+                 OUT='\342\230\275';;
+    umbrellarain) #utf8 hex: \xe2\x98\x94 | unicode: U+2614
+                 OUT='\342\230\224';;
+
+    * )   echo "Invalid option provided to get_symbol" >&2
+          return 1
+          ;;
+  esac
+
+  echo "$OUT"
+}
+
 
 # If online, do weather
 function check_internet {
@@ -146,22 +174,28 @@ EOF
     local SUNRISE=$(echo "$RESPONSEHOLDER" | grep -o -e '"sunrise":[0-9]\{10\}' | tail -c 11)
     local SUNSET=$(echo "$RESPONSEHOLDER" | grep -o -e '"sunset":[0-9]\{10\}' | tail -c 11)
 
+      # consider changing this nested if statement to a `case` statement
+
       if [[ -n $WEATHERCODE ]] ; then
             if [ "${WEATHERCODE:0:1}" -eq "2" ] ; then
-                WEATHERCHAR=☂
+                WEATHERCHAR=$(get_symbol umbrellarain)
             elif [ "${WEATHERCODE:0:1}" -eq "3" ] ; then
-                WEATHERCHAR=☂
+                WEATHERCHAR=$(get_symbol umbrella)
             elif [ "${WEATHERCODE:0:1}" -eq "5" ] ; then
-                WEATHERCHAR=☂
+                WEATHERCHAR=$(get_symbol umbrellarain)
             elif [ "${WEATHERCODE:0:1}" -eq "6" ] ; then
-                WEATHERCHAR=☃
+                WEATHERCHAR=$(get_symbol snowman)
             elif [ "${WEATHERCODE:0:1}" -eq "8" ] ; then
                 if [ "$NOW" -lt "$SUNRISE" ] ; then
-                  WEATHERCHAR=☽
+                  WEATHERCHAR=$(get_symbol moon)
                 elif [ "$NOW" -gt "$SUNRISE" -a "$NOW" -lt "$SUNSET" ] ; then
-                  WEATHERCHAR=☀︎;
+                  if [ "$WEATHERCODE" -eq "804" ] ; then #overcast
+                    WEATHERCHAR=$(get_symbol cloud)
+                  else
+                    WEATHERCHAR=$(get_symbol sun)
+                  fi
                 elif [ "$NOW" -gt "$SUNSET" ] ; then
-                  WEATHERCHAR=☽
+                  WEATHERCHAR=$(get_symbol moon)
                 fi
             else
 	        WEATHERCHAR="$c" # if no weathercode make default character ($)
