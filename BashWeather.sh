@@ -207,7 +207,7 @@ EOF
     if [ -n "$s" ] ; then
         # get rid of $UPDATED from $WEATHERCHAR
         if [ "${WEATHERCHAR:${#WEATHERCHAR} - ${#s}}" == "$s" ] ; then
-            WEATHERCHAR="${WEATHERCHAR:0:1}"
+            WEATHERCHAR="${WEATHERCHAR:0:12}"
         fi
     fi
   fi
