@@ -35,7 +35,7 @@ function check_internet {
     if [ -z "$BASHWEATHER_FIRSTRUN" ] ; then
       BASHWEATHER_FIRSTRUN="run already"
        # check if there is internet
-      wget -q --tries=5 --timeout=$t http://google.com -O - 2>/dev/null
+      wget -q --tries=1 --timeout=$t http://google.com -O - 2>/dev/null
       if [[ $? -eq 0 ]]; then
           # local INTERNET=true
           return 0
