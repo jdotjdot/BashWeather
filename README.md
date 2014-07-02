@@ -32,7 +32,7 @@ The accuracy of BashWeather relies on OpenWeatherMap and, if using it, FreeGeoIP
 
 USAGE:
     Add `. [/path/to/]BashWeather.sh [options]` to your `.bashrc`,
-    then include `$WEATHERCHAR` in your bash `$PROMPT` variable somewhere below that.
+    then include `$WEATHERCHAR` in your bash `$PS1` variable somewhere below that.
     If you plan to use the provided `RunLocateMe` binary that makes use of Mac OS X\'s geolocation feature, make sure that it is located in the same directory as `BashWeather.sh`.
 
 OPTIONS:
