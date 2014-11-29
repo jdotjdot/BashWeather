@@ -51,7 +51,7 @@ function getResponse {
 
    if [ -n "$l" ] ; then
    # if user supplies location or specifies LocateMe
-      if [ $(echo "$l" | tr '[:upper:]' '[:lower:]') != "locateme" ] ; then
+      if [ "$(echo "$l" | tr '[:upper:]' '[:lower:]')" != "locateme" ] ; then
         local RESPONSEHOLDER=$(curl --connect-timeout $t -s "http://api.openweathermap.org/data/2.5/weather?q=$l" 2>/dev/null)
       else
         # Using LocateMe
