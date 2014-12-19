@@ -8,16 +8,15 @@ Pull requests welcome!
 Program: BashWeather<br>
 Author: J.J.<br>
 Email: JJ@jdotjdot.com<br>
-Version 1.1<br>
+Version 1.2<br>
 
 This script makes use of the following tools:
 + [LocateMe](https://github.com/netj/LocateMe) for Mac OS X by Robert Harder
     *  Includes both the source code as well as the pre-compiled XCode project
 + [OpenWeatherMap](http://openweathermap.org)'s excellent weather API
 + [Shellcheck.net](http://www.shellcheck.net/) -- excellent Bash debugging tool!
-+ [FreeGeoIP.net](http://freegeoip.net) for IP geolocation
-
-The accuracy of BashWeather relies on OpenWeatherMap and, if using it, FreeGeoIP.
++ [ip-api.com](http://ip-api.com) for IP geolocation
+The accuracy of BashWeather relies on OpenWeatherMap and, if using it, ip-api.com. 
 
 ![BashWeather screenshot](https://dl.dropboxusercontent.com/s/kuhg2qfky3y6kvo/bashweather%20screenshot.png)
 <!-- ![BashWeather screenshot](https://dl.dropboxusercontent.com/s/fnlza39a2q1ubut/bashweather%20screenshot%202.png) -->
@@ -33,7 +32,7 @@ The accuracy of BashWeather relies on OpenWeatherMap and, if using it, FreeGeoIP
 USAGE:
     Add `. [/path/to/]BashWeather.sh [options]` to your `.bashrc`,
     then include `$WEATHERCHAR` in your bash `$PS1` variable somewhere below that.
-    If you plan to use the provided `RunLocateMe` binary that makes use of Mac OS X\'s geolocation feature, make sure that it is located in the same directory as `BashWeather.sh`.
+    If you plan to use the provided `RunLocateMe` binary that makes use of Mac OS X's geolocation feature, make sure that it is located in the same directory as `BashWeather.sh`.
 
 OPTIONS:
 + `-c <character>` - default character to be displayed in your prompt should the weather not be available for any reason.  Default character is the dollar sign (`$`).  Please note that this will NOT become a hash (`#`) when root.
