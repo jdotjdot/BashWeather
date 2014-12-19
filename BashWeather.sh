@@ -63,9 +63,9 @@ function getResponse {
       fi
    else
     # default is by IP address
-    local TEMPHOLDER=$(curl --connect-timeout $t -s "http://freegeoip.net/json/" 2>/dev/null)
-    LAT=$(echo $TEMPHOLDER | grep -o -e '"latitude":[0-9\.\-]\+' | grep -o -e '[0-9\.\-]\+$')
-    LON=$(echo $TEMPHOLDER | grep -o -e '"longitude":[0-9\.\-]\+' | grep -o -e '[0-9\.\-]\+$')
+    local TEMPHOLDER=$(curl --connect-timeout $t -s "http://ip-api.com/json/" 2>/dev/null)
+    LAT=$(echo $TEMPHOLDER | grep -o -e '"lat":[0-9\.\-]\+' | grep -o -e '[0-9\.\-]\+$')
+    LON=$(echo $TEMPHOLDER | grep -o -e '"lon":[0-9\.\-]\+' | grep -o -e '[0-9\.\-]\+$')
     local RESPONSEHOLDER=$(curl --connect-timeout $t -s "http://api.openweathermap.org/data/2.5/weather?lat=$LAT&lon=$LON" 2>/dev/null)
    fi
 
