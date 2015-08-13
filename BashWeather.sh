@@ -1,5 +1,9 @@
 #!/bin/bash
 
+function url_escape {
+  echo $(echo "$@" | sed -e 's/ /%20/g' -e 's/!/%21/g' -e 's/#/%23/g' -e 's/\$/%24/g' -e 's/\&/%26/g' -e "s/'/%27/g" -e 's/(/%28/g' -e 's/)/%29/g')
+}
+
 
 function get_symbol {
   # this function takes in the word for the weather character
@@ -52,7 +56,8 @@ function getResponse {
    if [ -n "$l" ] ; then
    # if user supplies location or specifies LocateMe
       if [ "$(echo "$l" | tr '[:upper:]' '[:lower:]')" != "locateme" ] ; then
-        local RESPONSEHOLDER=$(curl --connect-timeout $t -s "http://api.openweathermap.org/data/2.5/weather?q=$l" 2>/dev/null)
+        local ESCAPED_CITY=$(url_escape "$l")
+        local RESPONSEHOLDER=$(curl --connect-timeout $t -s "http://api.openweathermap.org/data/2.5/weather?q=$ESCAPED_CITY" 2>/dev/null)
       else
         # Using LocateMe
         check_internet
