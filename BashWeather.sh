@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 #!/bin/bash
 
 function url_escape {
@@ -92,8 +94,10 @@ function sourceDirectory {
 
 function runWeather {
 
+  e=false
+
   local OPTIND
-  while getopts ":c:l:u:s:t:h" opt ; do
+  while getopts ":c:l:u:s:t:eh" opt ; do
       case "$opt" in
           c  )   # default character to display if no weather, leave empty for none
               c="$OPTARG"
@@ -107,12 +111,15 @@ function runWeather {
           s  )   # weather update alert string to supply, if any
               s="$OPTARG"
               ;;
-	        t  )   # http timeout
-      	      t="$OPTARG"
-      	      ;;
+          t  )   # http timeout
+              t="$OPTARG"
+              ;;
+          e  )   # echo the result
+              e=true
+              ;;
           h  )
               # echo the help file
-	      local HELP=$(cat <<"EOF"
+        local HELP=$(cat <<"EOF"
 USAGE:
     Add `. [/path/to/]BashWeather.sh [options]` to your `.bashrc`,
     then include `$WEATHERCHAR` in your bash `$PROMPT` variable somewhere below that.
@@ -126,11 +133,12 @@ OPTIONS:
  + `-u <integer>` - how often, in seconds, to wait between weather updates.  Default is 10800 (3 hours).
  + `-s <string>` - a string, like `"(weather updated)"`, to display only when the weather has just been updated.  No default.
  + `-t <integer>` - timeout, in seconds, for any http requests made by BashWeather.  Make this value smaller if you want a shorter delay when no internet is available or is too slow.  Default is 1.
+ + `-e` - echo the resulting character instead. This does NOT save to `WEATHERCHAR`.
  + `-h` - display the help.
 EOF
 )
-	      echo "$HELP"
-	      return 1
+        echo "$HELP"
+        return 1
               ;;
           \? )
               echo "Invalid option: -$OPTARG" >&2
@@ -152,7 +160,14 @@ EOF
 
   # 10800 is 3 hours in Unix time--so we download the weather again after 3 hours
   # 3600 is 1 hour
-  if [ -z "$LAST_TIME_CHECKED_WEATHER" ] ; then # on startup
+    # If we have set the "echo" flag, ignore whether or not we assign it again and just do it anyway
+  #  since we're running it as a command
+  if [ "$e" = "true" ] ; then
+
+      local RESPONSEHOLDER=$(getResponse)
+      local ASSIGN_AGAIN=true
+
+  elif [ -z "$LAST_TIME_CHECKED_WEATHER" ] ; then # on startup
 
       local RESPONSEHOLDER=$(getResponse)
 
@@ -174,7 +189,7 @@ EOF
       local UPDATED=""
   fi
 
-  if [ $ASSIGN_AGAIN ] ; then
+  if [ "$ASSIGN_AGAIN" = "true" ] ; then
     local WEATHERCODE=$(echo "$RESPONSEHOLDER" | grep -o -e '"weather":[^[]*\[[^{]*{[^}]*"id": *[0-9]\{1,3\}' | tail -c 4)
     local SUNRISE=$(echo "$RESPONSEHOLDER" | grep -o -e '"sunrise":[0-9]\{10\}' | tail -c 11)
     local SUNSET=$(echo "$RESPONSEHOLDER" | grep -o -e '"sunset":[0-9]\{10\}' | tail -c 11)
@@ -183,41 +198,46 @@ EOF
 
       if [[ -n $WEATHERCODE ]] ; then
             if [ "${WEATHERCODE:0:1}" -eq "2" ] ; then
-                WEATHERCHAR=$(get_symbol umbrellarain)
+                BASHWEATHERSYMBOL=$(get_symbol umbrellarain)
             elif [ "${WEATHERCODE:0:1}" -eq "3" ] ; then
-                WEATHERCHAR=$(get_symbol umbrella)
+                BASHWEATHERSYMBOL=$(get_symbol umbrella)
             elif [ "${WEATHERCODE:0:1}" -eq "5" ] ; then
-                WEATHERCHAR=$(get_symbol umbrellarain)
+                BASHWEATHERSYMBOL=$(get_symbol umbrellarain)
             elif [ "${WEATHERCODE:0:1}" -eq "6" ] ; then
-                WEATHERCHAR=$(get_symbol snowman)
+                BASHWEATHERSYMBOL=$(get_symbol snowman)
             elif [ "${WEATHERCODE:0:1}" -eq "8" ] ; then
                 if [ "$NOW" -lt "$SUNRISE" ] ; then
-                  WEATHERCHAR=$(get_symbol moon)
+                  BASHWEATHERSYMBOL=$(get_symbol moon)
                 elif [ "$NOW" -gt "$SUNRISE" -a "$NOW" -lt "$SUNSET" ] ; then
                   if [ "$WEATHERCODE" -eq "804" ] ; then #overcast
-                    WEATHERCHAR=$(get_symbol cloud)
+                    BASHWEATHERSYMBOL=$(get_symbol cloud)
                   else
-                    WEATHERCHAR=$(get_symbol sun)
+                    BASHWEATHERSYMBOL=$(get_symbol sun)
                   fi
                 elif [ "$NOW" -gt "$SUNSET" ] ; then
-                  WEATHERCHAR=$(get_symbol moon)
+                  BASHWEATHERSYMBOL=$(get_symbol moon)
                 fi
             else
-	        WEATHERCHAR="$c" # if no weathercode make default character ($)
+          BASHWEATHERSYMBOL="$c" # if no weathercode make default character ($)
             fi
       else
-          WEATHERCHAR="$c" # if internet dead so no WEATHERCODE
+          BASHWEATHERSYMBOL="$c" # if internet dead so no WEATHERCODE
       fi
   else
     if [ -n "$s" ] ; then
-        # get rid of $UPDATED from $WEATHERCHAR
-        if [ "${WEATHERCHAR:${#WEATHERCHAR} - ${#s}}" == "$s" ] ; then
-            WEATHERCHAR="${WEATHERCHAR:0:12}"
+        # get rid of $UPDATED from $BASHWEATHERSYMBOL
+        if [ "${BASHWEATHERSYMBOL:${#BASHWEATHERSYMBOL} - ${#s}}" == "$s" ] ; then
+            BASHWEATHERSYMBOL="${BASHWEATHERSYMBOL:0:12}"
         fi
     fi
   fi
 
-  WEATHERCHAR=$(echo -n "$WEATHERCHAR" && echo " $UPDATED" | sed 's/ *$//')
+  # only assign $WEATHERCHAR if we're not echoing
+  if [ "$e" = "true" ] ; then
+    echo "$BASHWEATHERSYMBOL"
+  else
+    WEATHERCHAR=$(echo -n "$BASHWEATHERSYMBOL" && echo " $UPDATED" | sed 's/ *$//')
+  fi
 }
 
 runWeather "$@"

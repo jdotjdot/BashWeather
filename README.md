@@ -33,6 +33,7 @@ USAGE:
     Add `. [/path/to/]BashWeather.sh [options]` to your `.bashrc`,
     then include `$WEATHERCHAR` in your bash `$PS1` variable somewhere below that.
     If you plan to use the provided `RunLocateMe` binary that makes use of Mac OS X's geolocation feature, make sure that it is located in the same directory as `BashWeather.sh`.
+    Alternatively, if you simply wish to return the character, you can use the `-e` flag like `printf "$(. [/path/to/]BashWeather.sh [options] -e )"` to print the weather character.
 
 OPTIONS:
 + `-c <character>` - default character to be displayed in your prompt should the weather not be available for any reason.  Default character is the dollar sign (`$`).  Please note that this will NOT become a hash (`#`) when root.
@@ -42,6 +43,7 @@ OPTIONS:
  + `-u <integer>` - how often, in seconds, to wait between weather updates.  Default is 10800 (3 hours).
  + `-s <string>` - a string, like `"(weather updated)"`, to display only when the weather has just been updated.  No default.
  + `-t <integer>` - timeout, in seconds, for any HTTP requests made by BashWeather.  Make this value smaller if you want a shorter delay when no internet is available or is too slow.  Default is 1.
+ + `-e` - echo the resulting character instead. This does _not_ save to `WEATHERCHAR`.
  + `-h` - display the help.
 
 BashWeather will create the following global variables in Bash:
